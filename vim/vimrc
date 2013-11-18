@@ -1,0 +1,255 @@
+" vimrc
+"
+" Maintainer:	webee.yw <webee.yw@gmail.com>
+" Last change:	2013.11
+"
+
+" 使用vim的配置，必须放在最前面，会对其它设置产生影响
+set nocompatible
+let mapleader = ","
+
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+"Don't use Ex mode, use Q for formatting
+map Q gq
+
+" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
+" so that you can undo CTRL-U after inserting a line break.
+inoremap <C-U> <C-G>u<C-U>
+
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+" Only define it when not defined already.
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+		  \ | wincmd p | diffthis
+endif
+
+" filetype
+au BufRead,BufNewFile *.j2,*.jinja set ft=html syntax=htmljinja
+"autocmd BufNewFile *.sh   0r ~/.vim/skel/dot.sh  | exe "%s/<FILE>/".expand("%")
+"
+
+" [binary hex]
+nmap <leader>xxd :%!xxd<cr>
+nmap <leader>yyd :%!xxd -r<cr>
+nmap <leader>xu :%!xxd -r<cr>:%!xxd<cr>
+" [quickfix]
+autocmd FileType c,cpp map <buffer> <leader><space> :w<cr>:make<cr>
+nmap <leader>cc :cc<cr>
+nmap <leader>cn :cn<cr>
+nmap <leader>cp :cp<cr>
+nmap <leader>cw :cw 10<cr>
+nmap <leader>uq :call g:ClangUpdateQuickFix()<cr>
+
+" [browse]
+" cscope
+function! Init_Cscope_Conn()
+    if filereadable("cscope.out")
+        cs add cscope.out
+    endif
+    "cs add /usr/share/vim/vimfiles/db/cscope.out /usr/include
+endfunction
+"call Init_Cscope_Conn()
+set cscopetagorder=0
+nmap <F9> :!cscope -Rbq<cr><cr>:cs kill -1<cr>:call Init_Cscope_Conn()<cr>
+" ctags
+set tags=tags,/usr/include/tags
+set autochdir
+
+nmap <F10> :!ctags -ftags -R --c-kinds=+lpx --c++-kinds=+lpx --langmap=c:.c.h --fields=+iasS --extra=+q .<cr><cr>
+" taglist
+"nmap <F11> :TlistToggle<cr>
+let Tlist_Show_One_File=1
+let Tlist_Exit_OnlyWindow=1
+let g:bufExplorerMaxHeight=30
+" nerdtree
+let g:NERDTree_title="[NERDTree]"
+let g:winManagerWindowLayout="NERDTree|TagList"
+
+function! NERDTree_Start()
+    exec 'NERDTree'
+endfunction
+
+function! NERDTree_IsValid()
+    return 1
+endfunction
+
+function! WM_Toggle()
+	if IsWinManagerVisible()
+		exec 'WMClose'
+	else
+        exec 'WManager'
+        exec 'q'
+	end
+endfunction
+
+nmap <F12> :call WM_Toggle()<cr>
+
+" clang complete
+let g:clang_auto_select=1
+let g:clang_complete_copen=1
+"let g:clang_hl_errors=1
+"let g:clang_periodic_quickfix=0
+let g:clang_snippets=1
+"let g:clang_snippets_engine='clang_complete'
+"let g:clang_conceal_snippets=1
+"let g:clang_trailing_placeholder=1
+let g:clang_close_preview=1
+"let g:clang_exec='clang'
+"let g:clang_user_options='-std=c++11'
+"let g:clang_auto_user_options='path,.clang_complete'
+"let g:clang_complete_auto=1
+let g:clang_complete_macros=1
+let g:clang_complete_lib_flags=1
+let g:clang_complete_patterns=1
+let g:clang_complete_quickfix=1
+let g:clang_use_library=1
+
+"===========================
+"[vim基本配置]
+"===========================
+"关闭vi的兼容模式 iMproved.
+set nocompatible
+
+"设置编码方式
+set encoding=utf-8
+"自动判断编码时 依次尝试以下编码
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,latin1
+
+"设置备份目录
+"取消备份
+"set nobackup
+"显示临时文件
+"set noswapfile
+set backupdir=~/.vimbak
+"设置历史记录条数
+set history=1000
+
+"显示行号
+set number
+"编辑过程中右下角显示光标的行列信息
+set ruler
+"当一行文字很长时取消换行
+set nowrap
+"在状态栏显示正在输入的命令
+set showcmd
+"突出显示当前行列
+"set cursorline
+"set cursorcolumn
+
+"设置匹配模式 比如输入配对的括号时会高亮
+set showmatch
+
+"设置自动对齐
+set autoindent
+"检测文件类型 自动补全
+filetype on
+filetype indent on
+filetype plugin on
+filetype plugin indent on
+
+"开启语法高亮功能
+syntax enable
+syntax on
+
+"设置搜索时忽略大小写
+set ignorecase
+
+"设置在vim中可以使用鼠标，方便拷贝
+if has('mouse')
+  set mouse=a
+endif
+
+"设置Tab宽度
+set tabstop=4
+"设置自动对齐空格数
+set shiftwidth=4
+set softtabstop=4
+set smarttab
+"将Tab键自动转换成空格 Tab则使用[Ctrl + V + Tab]
+set expandtab
+"设置动态增量搜索
+set incsearch
+"关闭搜索结果高亮显示
+set hls!
+set hls!
+
+"分隔窗口设置 在当前文件窗口的下面和右边显示新窗口
+set splitbelow
+set splitright
+
+"设置色彩配置
+colorscheme default
+
+"自定义映射
+nnoremap <leader>q :qall<CR>
+
+"=========================
+"Vundle
+"=========================
+"必要配置
+"===============
+set nocompatible        " be iMproved
+filetype off            " required
+set rtp+=~/.vim/bundle/vundle
+call vundle#rc()
+
+"使用Vundle管理自己
+" required
+Bundle 'gmarik/vundle'
+
+"=====================
+" 管理的bundles
+"=====================
+"# GitHub repos
+"===============
+Bundle 'Lokaltog/vim-powerline'
+"vim有一个状态栏 加上powline则有两个
+set laststatus=2
+set noshowmode
+set t_Co=256
+let g:Powline_symbols='fancy'
+
+Bundle 'ervandew/supertab'
+" code complete
+let g:completekey = "<S-tab>"
+" supertab
+let g:SuperTabDefaultCompletionType = "context"
+
+Bundle 'vim-scripts/VimClojure'
+let vimclojure#WantNailgun = 1
+
+Bundle 'vim-scripts/FuzzyFinder'
+Bundle 'vim-scripts/taglist.vim'
+Bundle 'vim-scripts/vimwiki'
+
+" minibufexpl
+Bundle 'vim-scripts/minibufexpl.vim'
+nmap <leader>t :TMiniBufExplorer<cr>
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplMapWindowNavVimArrows = 1
+let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplModSelTarget = 1
+let g:miniBufExplMoreThanone = 0
+let g:miniBufExplMapCTabSwitchWindows = 1
+
+
+"# vim-scripts repos
+"===============
+Bundle 'L9'
+
+
+" 其它的git repos
+"===============
+"Bundle 'git://xx.yy.zz/abc.git'
+
+
+" 本地Git repos
+"===============
+"Bundle 'file:///path/to/plugin'
+
+" start.
+"============
+filetype plugin indent on   " required!
