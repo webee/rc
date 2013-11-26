@@ -31,18 +31,6 @@ au BufRead,BufNewFile *.j2,*.jinja set ft=html syntax=htmljinja
 "autocmd BufNewFile *.sh   0r ~/.vim/skel/dot.sh  | exe "%s/<FILE>/".expand("%")
 "
 
-" [binary hex]
-nmap <leader>xxd :%!xxd<cr>
-nmap <leader>yyd :%!xxd -r<cr>
-nmap <leader>xu :%!xxd -r<cr>:%!xxd<cr>
-" [quickfix]
-autocmd FileType c,cpp map <buffer> <leader><space> :w<cr>:make<cr>
-nmap <leader>cc :cc<cr>
-nmap <leader>cn :cn<cr>
-nmap <leader>cp :cp<cr>
-nmap <leader>cw :cw 10<cr>
-nmap <leader>uq :call g:ClangUpdateQuickFix()<cr>
-
 " [browse]
 " cscope
 function! Init_Cscope_Conn()
@@ -107,8 +95,7 @@ let g:clang_complete_patterns=1
 let g:clang_complete_quickfix=1
 let g:clang_use_library=1
 
-"===========================
-"[vim基本配置]
+"{{{[vim基本配置]
 "===========================
 "关闭vi的兼容模式 iMproved.
 set nocompatible
@@ -142,7 +129,7 @@ set showcmd
 "设置匹配模式 比如输入配对的括号时会高亮
 set showmatch
 
-"设置自动对齐
+"设置自动缩进
 set autoindent
 "检测文件类型 自动补全
 filetype on
@@ -174,36 +161,55 @@ set expandtab
 set incsearch
 "关闭搜索结果高亮显示
 set hls!
-set hls!
 
-"分隔窗口设置 在当前文件窗口的下面和右边显示新窗口
+" #分隔窗口设置 在当前文件窗口的下面和右边显示新窗口
 set splitbelow
 set splitright
 
-"设置色彩配置
+" #设置色彩配置
 colorscheme default
 
-"自定义映射
-nnoremap <leader>q :qall<CR>
+" #折叠
+set foldmethod=marker
+set foldmarker={{{,}}}
 
-"=========================
-"Vundle
-"=========================
-"必要配置
-"===============
+"{{{ [自定义映射]
+nnoremap <leader>q :qall<CR>
+" #binary hex
+nmap <leader>xxd :%!xxd<cr>
+nmap <leader>yyd :%!xxd -r<cr>
+nmap <leader>xu :%!xxd -r<cr>:%!xxd<cr>
+" #quickfix
+autocmd FileType c,cpp map <buffer> <leader><space> :w<cr>:make<cr>
+nmap <leader>cc :cc<cr>
+nmap <leader>cn :cn<cr>
+nmap <leader>cp :cp<cr>
+nmap <leader>cw :cw 10<cr>
+nmap <leader>uq :call g:ClangUpdateQuickFix()<cr>
+"}}}
+"}}}
+
+"{{{[Vundle]
+"{{{[必要配置]
 set nocompatible        " be iMproved
 filetype off            " required
 set rtp+=~/.vim/bundle/vundle
 call vundle#rc()
+"}}}
 
-"使用Vundle管理自己
+"{{{ [管理bundles]
+"=====================
+"{{{# 管理自己
 " required
 Bundle 'gmarik/vundle'
+"}}}
 
-"=====================
-" 管理的bundles
-"=====================
-"# GitHub repos
+"{{{# vim-scripts repos
+"===============
+Bundle 'L9'
+"}}}
+
+"{{{# GitHub repos
 "===============
 Bundle 'Lokaltog/vim-powerline'
 "vim有一个状态栏 加上powline则有两个
@@ -217,6 +223,18 @@ Bundle 'ervandew/supertab'
 let g:completekey = "<S-tab>"
 " supertab
 let g:SuperTabDefaultCompletionType = "context"
+
+Bundle 'vim-scripts/indentpython.vim'
+Bundle 'nvie/vim-flake8'
+autocmd FileType python map <buffer> <F7> :call Flake8()<CR>
+let g:flake8_builtins="_, apply"
+"let g:flake8_ignore="E501,W293"
+let g:flake8_max_line_length=80
+let g:flake8_max_complexity=10
+"let g:flake8_cmd="/path/to/flake8"
+autocmd BufWritePost *.py call Flake8()
+Bundle 'vim-scripts/pylint.vim'
+autocmd FileType python compiler pylint
 
 Bundle 'vim-scripts/VimClojure'
 let vimclojure#WantNailgun = 1
@@ -234,22 +252,22 @@ let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1
 let g:miniBufExplMoreThanone = 0
 let g:miniBufExplMapCTabSwitchWindows = 1
+"}}}
 
-
-"# vim-scripts repos
-"===============
-Bundle 'L9'
-
-
-" 其它的git repos
+"{{{# 其它的git repos
 "===============
 "Bundle 'git://xx.yy.zz/abc.git'
+"}}}
 
-
-" 本地Git repos
+"{{{# 本地Git repos
 "===============
 "Bundle 'file:///path/to/plugin'
+"}}}
+"}}}
 
-" start.
+"{{{# start.
 "============
 filetype plugin indent on   " required!
+"}}}
+"}}}
+
