@@ -174,7 +174,7 @@ set foldmethod=marker
 set foldmarker={{{,}}}
 
 "{{{ [自定义映射]
-nnoremap <leader>q :qall<CR>
+nnoremap <leader>z :qall<CR>
 " #binary hex
 nmap <leader>xxd :%!xxd<cr>
 nmap <leader>yyd :%!xxd -r<cr>
@@ -218,12 +218,6 @@ set noshowmode
 set t_Co=256
 let g:Powline_symbols='fancy'
 
-Bundle 'ervandew/supertab'
-" code complete
-let g:completekey = "<S-tab>"
-" supertab
-let g:SuperTabDefaultCompletionType = "context"
-
 Bundle 'vim-scripts/indentpython.vim'
 Bundle 'nvie/vim-flake8'
 autocmd FileType python map <buffer> <F7> :call Flake8()<CR>
@@ -252,6 +246,15 @@ let g:miniBufExplMapCTabSwitchBufs = 1
 let g:miniBufExplModSelTarget = 1
 let g:miniBufExplMoreThanone = 0
 let g:miniBufExplMapCTabSwitchWindows = 1
+
+Bundle 'Valloric/YouCompleteMe'
+nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+let g:ycm_confirm_extra_conf = 0
+let g:syntastic_always_populate_loc_list = 1
+Bundle 'Valloric/ListToggle'
+Bundle 'scrooloose/syntastic'
 "}}}
 
 "{{{# 其它的git repos
