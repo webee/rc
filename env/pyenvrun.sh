@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 #require: virtualenv, virtualenvwrapper
 #set -x
 #set -e
@@ -39,7 +39,7 @@ export VIRTUALENVWRAPPER_PYTHON=${PY_HOME}/python
 source ${PY_HOME}/virtualenvwrapper.sh
 export WORKON_HOME=~/.virtualenvs
 
-if [ "$1" != "" ]; then
+if [ "$1" != "" ] && ! [[ "$1" == -* ]]; then
     if workon $1 >/dev/null 2>&1; then
         shift
     fi
