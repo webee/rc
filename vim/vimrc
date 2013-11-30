@@ -26,11 +26,6 @@ if !exists(":DiffOrig")
 		  \ | wincmd p | diffthis
 endif
 
-" filetype
-au BufRead,BufNewFile *.j2,*.jinja set ft=html syntax=htmljinja
-"autocmd BufNewFile *.sh   0r ~/.vim/skel/dot.sh  | exe "%s/<FILE>/".expand("%")
-"
-
 " [browse]
 " cscope
 function! Init_Cscope_Conn()
@@ -48,52 +43,13 @@ set autochdir
 
 nmap <F10> :!ctags -ftags -R --c-kinds=+lpx --c++-kinds=+lpx --langmap=c:.c.h --fields=+iasS --extra=+q .<cr><cr>
 " taglist
-"nmap <F11> :TlistToggle<cr>
+nmap <F12> :TlistToggle<cr>
 let Tlist_Show_One_File=1
 let Tlist_Exit_OnlyWindow=1
 let g:bufExplorerMaxHeight=30
 " nerdtree
 let g:NERDTree_title="[NERDTree]"
 let g:winManagerWindowLayout="NERDTree|TagList"
-
-function! NERDTree_Start()
-    exec 'NERDTree'
-endfunction
-
-function! NERDTree_IsValid()
-    return 1
-endfunction
-
-function! WM_Toggle()
-	if IsWinManagerVisible()
-		exec 'WMClose'
-	else
-        exec 'WManager'
-        exec 'q'
-	end
-endfunction
-
-nmap <F12> :call WM_Toggle()<cr>
-
-" clang complete
-let g:clang_auto_select=1
-let g:clang_complete_copen=1
-"let g:clang_hl_errors=1
-"let g:clang_periodic_quickfix=0
-let g:clang_snippets=1
-"let g:clang_snippets_engine='clang_complete'
-"let g:clang_conceal_snippets=1
-"let g:clang_trailing_placeholder=1
-let g:clang_close_preview=1
-"let g:clang_exec='clang'
-"let g:clang_user_options='-std=c++11'
-"let g:clang_auto_user_options='path,.clang_complete'
-"let g:clang_complete_auto=1
-let g:clang_complete_macros=1
-let g:clang_complete_lib_flags=1
-let g:clang_complete_patterns=1
-let g:clang_complete_quickfix=1
-let g:clang_use_library=1
 
 "{{{[vim基本配置]
 "===========================
@@ -218,6 +174,9 @@ set noshowmode
 set t_Co=256
 let g:Powline_symbols='fancy'
 
+" #syntax
+Bundle 'vim-scripts/python.vim--Vasiliev'
+
 Bundle 'vim-scripts/indentpython.vim'
 Bundle 'nvie/vim-flake8'
 autocmd FileType python map <buffer> <F7> :call Flake8()<CR>
@@ -229,6 +188,9 @@ let g:flake8_max_complexity=10
 autocmd BufWritePost *.py call Flake8()
 Bundle 'vim-scripts/pylint.vim'
 autocmd FileType python compiler pylint
+
+Bundle 'jmcantrell/vim-virtualenv'
+let g:virtualenv_auto_activate = 1
 
 Bundle 'vim-scripts/VimClojure'
 let vimclojure#WantNailgun = 1
@@ -253,8 +215,11 @@ nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
 let g:syntastic_always_populate_loc_list = 1
+let g:ycm_autoclose_preview_window_after_completion = 1
+let g:ycm_seed_identifiers_with_syntax = 1
 Bundle 'Valloric/ListToggle'
 Bundle 'scrooloose/syntastic'
+Bundle 'SirVer/ultisnips'
 "}}}
 
 "{{{# 其它的git repos
@@ -274,3 +239,6 @@ filetype plugin indent on   " required!
 "}}}
 "}}}
 
+" #补全
+"autocmd FileType python set omnifunc=pythoncomplete#Complete
+set omnifunc=syntaxcomplete#Complete
