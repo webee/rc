@@ -1,3 +1,4 @@
 * vim/vimrc ~/.vimrc
 * X/Xresources ~/.Xresources
 * shell/zshrc ~/.zshrc
+* env/python.sh /etc/profile.d/python.sh env/python_after.sh
