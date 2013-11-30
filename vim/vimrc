@@ -124,13 +124,20 @@ set splitright
 
 " #设置色彩配置
 colorscheme default
+hi Pmenu ctermbg=255 ctermfg=0 guibg=LightMagenta
+hi PmenuSel ctermbg=7 ctermfg=0 guibg=Grey
+hi PmenuSbar ctermbg=248 guibg=Grey
 
 " #折叠
 set foldmethod=marker
 set foldmarker={{{,}}}
 
 "{{{ [自定义映射]
-nnoremap <leader>z :qall<CR>
+nnoremap <leader>z :qall!<CR>
+nnoremap <leader>, :xall<CR>
+nnoremap tx :tabclose<CR>
+nnoremap <S-L> :tabrext<CR>
+nnoremap <S-H> :tabprevious<CR>
 " #binary hex
 nmap <leader>xxd :%!xxd<cr>
 nmap <leader>yyd :%!xxd -r<cr>
@@ -215,6 +222,8 @@ nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
 let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
 let g:ycm_confirm_extra_conf = 0
 let g:syntastic_always_populate_loc_list = 1
+let g:ycm_add_preview_to_completeopt = 0
+set completeopt-=preview
 let g:ycm_autoclose_preview_window_after_completion = 1
 let g:ycm_seed_identifiers_with_syntax = 1
 Bundle 'Valloric/ListToggle'
