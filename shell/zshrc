@@ -52,7 +52,6 @@ plugins=(git osx)
 
 source /etc/profile
 source $ZSH/oh-my-zsh.sh
-source ~/.zprofile
 
 # Customize to your needs...
 pip completion --zsh|source /dev/stdin
