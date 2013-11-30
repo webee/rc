@@ -8,6 +8,18 @@
 set nocompatible
 let mapleader = ","
 
+let host=hostname()
+if host =~ "darwin"
+    let bin_dir="/usr/local/bin"
+elseif host =~ "arch"
+    let bin_dir="/usr/bin"
+elseif host =~ "l-"
+    let bin_dir="/usr/bin"
+else
+    let bin_dir="/usr/bin"
+endif
+unlet host
+
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
 
@@ -42,14 +54,6 @@ set tags=tags,/usr/include/tags
 set autochdir
 
 nmap <F10> :!ctags -ftags -R --c-kinds=+lpx --c++-kinds=+lpx --langmap=c:.c.h --fields=+iasS --extra=+q .<cr><cr>
-" taglist
-nmap <F12> :TlistToggle<cr>
-let Tlist_Show_One_File=1
-let Tlist_Exit_OnlyWindow=1
-let g:bufExplorerMaxHeight=30
-" nerdtree
-let g:NERDTree_title="[NERDTree]"
-let g:winManagerWindowLayout="NERDTree|TagList"
 
 "{{{[vim基本配置]
 "===========================
@@ -204,6 +208,16 @@ let vimclojure#WantNailgun = 1
 
 Bundle 'vim-scripts/FuzzyFinder'
 Bundle 'vim-scripts/taglist.vim'
+let Tlist_Ctags_Cmd=bin_dir."/ctags"
+nmap <C-F11> :TlistUpdate<cr>
+nmap <F12> :TlistToggle<cr>
+let Tlist_Show_One_File=1
+let Tlist_Exit_OnlyWindow=1
+let g:bufExplorerMaxHeight=30
+" nerdtree
+let g:NERDTree_title="[NERDTree]"
+let g:winManagerWindowLayout="NERDTree|TagList"
+
 Bundle 'vim-scripts/vimwiki'
 
 " minibufexpl
