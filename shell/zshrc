@@ -60,7 +60,6 @@ PATH=/usr/local/bin:$HOME/scripts:$PATH
 export PATH
 
 # local source
-PY_HOME=$(dirname $(which python))
 export VIRTUALENVWRAPPER_PYTHON=${PY_HOME}/python
 source ${PY_HOME}/virtualenvwrapper.sh
 export WORKON_HOME=~/.virtualenvs
