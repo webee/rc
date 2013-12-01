@@ -53,13 +53,12 @@ plugins=(git osx)
 source /etc/profile
 source $ZSH/oh-my-zsh.sh
 
+PATH=$PY_HOME:$HOME/scripts:$PATH
+export PATH
+
 # Customize to your needs...
 pip completion --zsh|source /dev/stdin
-
-PATH=/usr/local/bin:$HOME/scripts:$PATH
-export PATH
 
 # local source
 export VIRTUALENVWRAPPER_PYTHON=${PY_HOME}/python
 source ${PY_HOME}/virtualenvwrapper.sh
-export WORKON_HOME=~/.virtualenvs
