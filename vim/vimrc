@@ -18,7 +18,6 @@ elseif host =~ "l-"
 else
     let bin_dir="/usr/bin"
 endif
-unlet host
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
@@ -191,8 +190,9 @@ Bundle 'vim-scripts/python.vim--Vasiliev'
 Bundle 'vim-scripts/indentpython.vim'
 Bundle 'nvie/vim-flake8'
 autocmd FileType python map <buffer> <F7> :call Flake8()<CR>
-let g:flake8_builtins="_, apply"
-"let g:flake8_ignore="E501,W293"
+"let g:flake8_builtins="_, apply"
+let g:flake8_builtins="_"
+let g:flake8_ignore="E501,W293"
 let g:flake8_max_line_length=80
 let g:flake8_max_complexity=10
 "let g:flake8_cmd="/path/to/flake8"
@@ -230,16 +230,33 @@ let g:miniBufExplModSelTarget = 1
 let g:miniBufExplMoreThanone = 0
 let g:miniBufExplMapCTabSwitchWindows = 1
 
-Bundle 'Valloric/YouCompleteMe'
-nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
-let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-let g:ycm_confirm_extra_conf = 0
-let g:syntastic_always_populate_loc_list = 1
-let g:ycm_add_preview_to_completeopt = 0
-set completeopt-=preview
-let g:ycm_autoclose_preview_window_after_completion = 1
-let g:ycm_seed_identifiers_with_syntax = 1
+"补全
+if host =~ "darwin" || host =~ "arch"
+    Bundle 'Valloric/YouCompleteMe'
+    nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+    nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+    let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+    let g:ycm_confirm_extra_conf = 0
+    let g:syntastic_always_populate_loc_list = 1
+    let g:ycm_add_preview_to_completeopt = 0
+    set completeopt-=preview
+    let g:ycm_autoclose_preview_window_after_completion = 1
+    let g:ycm_seed_identifiers_with_syntax = 1
+else
+    Bundle 'davidhalter/jedi-vim'
+    let g:jedi#goto_assignments_command = "<leader>g"
+    let g:jedi#goto_definitions_command = "<leader>d"
+    let g:jedi#documentation_command = "K"
+    let g:jedi#usages_command = "<leader>n"
+    let g:jedi#completions_command = "<C-Space>"
+    let g:jedi#rename_command = "<leader>r"
+    let g:jedi#show_call_signatures = "1"
+    "let g:jedi#completions_enabled = 0
+    
+    Bundle 'ervandew/supertab'
+    let g:SuperTabDefaultCompletionType = "context"
+endif
+
 Bundle 'Valloric/ListToggle'
 Bundle 'scrooloose/syntastic'
 Bundle 'SirVer/ultisnips'
@@ -265,3 +282,8 @@ filetype plugin indent on   " required!
 " #补全
 "autocmd FileType python set omnifunc=pythoncomplete#Complete
 set omnifunc=syntaxcomplete#Complete
+set completeopt+=longest
+autocmd FileType python setlocal completeopt-=preview
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
