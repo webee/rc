@@ -1,5 +1,6 @@
 #host src dest after
-* vim/vimrc ~/.vimrc
+l-* vim/vimrc.corp ~/.vimrc
+!l-* vim/vimrc ~/.vimrc
 * X/Xresources ~/.Xresources
 * shell/zshrc ~/.zshrc
 l-* env/python.corp.sh /etc/profile.d/python.sh env/python_after.sh
