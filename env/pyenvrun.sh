@@ -37,7 +37,6 @@ function set_py_home() {
 set_py_home
 export VIRTUALENVWRAPPER_PYTHON=${PY_HOME}/python
 source ${PY_HOME}/virtualenvwrapper.sh
-export WORKON_HOME=~/.virtualenvs
 
 if [ "$1" != "" ] && ! [[ "$1" == -* ]]; then
     if workon $1 >/dev/null 2>&1; then
