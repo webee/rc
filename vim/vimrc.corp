@@ -1,0 +1,289 @@
+" vimrc
+"
+" Maintainer:	webee.yw <webee.yw@gmail.com>
+" Last change:	2013.11
+"
+
+" 使用vim的配置，必须放在最前面，会对其它设置产生影响
+set nocompatible
+let mapleader = ","
+
+let host=hostname()
+if host =~ "darwin"
+    let bin_dir="/usr/local/bin"
+elseif host =~ "arch"
+    let bin_dir="/usr/bin"
+elseif host =~ "l-"
+    let bin_dir="/usr/bin"
+else
+    let bin_dir="/usr/bin"
+endif
+
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+"Don't use Ex mode, use Q for formatting
+map Q gq
+
+" CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
+" so that you can undo CTRL-U after inserting a line break.
+inoremap <C-U> <C-G>u<C-U>
+
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+" Only define it when not defined already.
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+		  \ | wincmd p | diffthis
+endif
+
+" [browse]
+" cscope
+function! Init_Cscope_Conn()
+    if filereadable("cscope.out")
+        cs add cscope.out
+    endif
+    "cs add /usr/share/vim/vimfiles/db/cscope.out /usr/include
+endfunction
+"call Init_Cscope_Conn()
+set cscopetagorder=0
+nmap <F9> :!cscope -Rbq<cr><cr>:cs kill -1<cr>:call Init_Cscope_Conn()<cr>
+" ctags
+set tags=tags,/usr/include/tags
+set autochdir
+
+nmap <F10> :!ctags -ftags -R --c-kinds=+lpx --c++-kinds=+lpx --langmap=c:.c.h --fields=+iasS --extra=+q .<cr><cr>
+
+"{{{[vim基本配置]
+"===========================
+"关闭vi的兼容模式 iMproved.
+set nocompatible
+
+"设置编码方式
+set encoding=utf-8
+"自动判断编码时 依次尝试以下编码
+set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,latin1
+
+"设置备份目录
+"取消备份
+"set nobackup
+"显示临时文件
+"set noswapfile
+set backupdir=~/.vimbak
+"设置历史记录条数
+set history=1000
+
+"显示行号
+set number
+"编辑过程中右下角显示光标的行列信息
+set ruler
+"当一行文字很长时取消换行
+set nowrap
+"在状态栏显示正在输入的命令
+set showcmd
+"突出显示当前行列
+"set cursorline
+"set cursorcolumn
+
+"设置匹配模式 比如输入配对的括号时会高亮
+set showmatch
+
+"设置自动缩进
+set autoindent
+"检测文件类型 自动补全
+filetype on
+filetype indent on
+filetype plugin on
+filetype plugin indent on
+
+"开启语法高亮功能
+syntax enable
+syntax on
+
+"设置搜索时忽略大小写
+set ignorecase
+
+"设置在vim中可以使用鼠标，方便拷贝
+if has('mouse')
+  set mouse=a
+endif
+
+"设置Tab宽度
+set tabstop=4
+"设置自动对齐空格数
+set shiftwidth=4
+set softtabstop=4
+set smarttab
+"将Tab键自动转换成空格 Tab则使用[Ctrl + V + Tab]
+set expandtab
+"设置动态增量搜索
+set incsearch
+"关闭搜索结果高亮显示
+set hls!
+
+" #分隔窗口设置 在当前文件窗口的下面和右边显示新窗口
+set splitbelow
+set splitright
+
+" #设置色彩配置
+colorscheme default
+hi Pmenu ctermbg=255 ctermfg=0 guibg=LightMagenta
+hi PmenuSel ctermbg=7 ctermfg=0 guibg=Grey
+hi PmenuSbar ctermbg=248 guibg=Grey
+
+" #折叠
+set foldmethod=marker
+set foldmarker={{{,}}}
+
+"{{{ [自定义映射]
+nnoremap <leader>z :qall!<CR>
+nnoremap <leader>, :xall<CR>
+nnoremap tx :tabclose<CR>
+nnoremap <S-L> :tabrext<CR>
+nnoremap <S-H> :tabprevious<CR>
+" #binary hex
+nmap <leader>xxd :%!xxd<cr>
+nmap <leader>yyd :%!xxd -r<cr>
+nmap <leader>xu :%!xxd -r<cr>:%!xxd<cr>
+" #quickfix
+autocmd FileType c,cpp map <buffer> <leader><space> :w<cr>:make<cr>
+nmap <leader>cc :cc<cr>
+nmap <leader>cn :cn<cr>
+nmap <leader>cp :cp<cr>
+nmap <leader>cw :cw 10<cr>
+nmap <leader>uq :call g:ClangUpdateQuickFix()<cr>
+"}}}
+"}}}
+
+"{{{[Vundle]
+"{{{[必要配置]
+set nocompatible        " be iMproved
+filetype off            " required
+set rtp+=~/.vim/bundle/vundle
+call vundle#rc()
+"}}}
+
+"{{{ [管理bundles]
+"=====================
+"{{{# 管理自己
+" required
+Bundle 'gmarik/vundle'
+"}}}
+
+"{{{# vim-scripts repos
+"===============
+"Bundle 'L9'
+"}}}
+
+"{{{# GitHub repos
+"===============
+Bundle 'Lokaltog/vim-powerline'
+"vim有一个状态栏 加上powline则有两个
+set laststatus=2
+set noshowmode
+set t_Co=256
+let g:Powline_symbols='fancy'
+
+" #syntax
+Bundle 'vim-scripts/python.vim--Vasiliev'
+
+Bundle 'vim-scripts/indentpython.vim'
+"Bundle 'nvie/vim-flake8'
+"autocmd FileType python map <buffer> <F7> :call Flake8()<CR>
+"let g:flake8_builtins="_, apply"
+"let g:flake8_builtins="_"
+"let g:flake8_ignore="E501,W293"
+"let g:flake8_max_line_length=80
+"let g:flake8_max_complexity=10
+"let g:flake8_cmd="/path/to/flake8"
+"autocmd BufWritePost *.py call Flake8()
+"Bundle 'vim-scripts/pylint.vim'
+"autocmd FileType python compiler pylint
+
+Bundle 'jmcantrell/vim-virtualenv'
+let g:virtualenv_auto_activate = 1
+
+"Bundle 'vim-scripts/VimClojure'
+"let vimclojure#WantNailgun = 1
+
+"Bundle 'vim-scripts/FuzzyFinder'
+Bundle 'vim-scripts/taglist.vim'
+let Tlist_Ctags_Cmd=bin_dir."/ctags"
+nmap <C-F11> :TlistUpdate<cr>
+nmap <F12> :TlistToggle<cr>
+let Tlist_Show_One_File=1
+let Tlist_Exit_OnlyWindow=1
+let g:bufExplorerMaxHeight=30
+" nerdtree
+let g:NERDTree_title="[NERDTree]"
+let g:winManagerWindowLayout="NERDTree|TagList"
+
+Bundle 'vim-scripts/vimwiki'
+
+" minibufexpl
+Bundle 'vim-scripts/minibufexpl.vim'
+nmap <leader>t :TMiniBufExplorer<cr>
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplMapWindowNavVimArrows = 1
+let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplModSelTarget = 1
+let g:miniBufExplMoreThanone = 0
+let g:miniBufExplMapCTabSwitchWindows = 1
+
+"补全
+if host =~ "darwin" || host =~ "arch"
+    Bundle 'Valloric/YouCompleteMe'
+    nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
+    nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
+    let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
+    let g:ycm_confirm_extra_conf = 0
+    let g:syntastic_always_populate_loc_list = 1
+    let g:ycm_add_preview_to_completeopt = 0
+    set completeopt-=preview
+    let g:ycm_autoclose_preview_window_after_completion = 1
+    let g:ycm_seed_identifiers_with_syntax = 1
+else
+    "Bundle 'davidhalter/jedi-vim'
+    "let g:jedi#goto_assignments_command = "<leader>g"
+    "let g:jedi#goto_definitions_command = "<leader>d"
+    "let g:jedi#documentation_command = "K"
+    "let g:jedi#usages_command = "<leader>n"
+    "let g:jedi#completions_command = "<C-Space>"
+    "let g:jedi#rename_command = "<leader>r"
+    "let g:jedi#show_call_signatures = "1"
+    "let g:jedi#completions_enabled = 0
+    
+    Bundle 'ervandew/supertab'
+    let g:SuperTabDefaultCompletionType = "context"
+endif
+
+Bundle 'Valloric/ListToggle'
+Bundle 'scrooloose/syntastic'
+"Bundle 'SirVer/ultisnips'
+"}}}
+
+"{{{# 其它的git repos
+"===============
+"Bundle 'git://xx.yy.zz/abc.git'
+"}}}
+
+"{{{# 本地Git repos
+"===============
+"Bundle 'file:///path/to/plugin'
+"}}}
+"}}}
+
+"{{{# start.
+"============
+filetype plugin indent on   " required!
+"}}}
+"}}}
+
+" #补全
+"autocmd FileType python set omnifunc=pythoncomplete#Complete
+set omnifunc=syntaxcomplete#Complete
+set completeopt+=longest
+autocmd FileType python setlocal completeopt-=preview
+autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+
