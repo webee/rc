@@ -5,10 +5,6 @@ case $host in
         PY_HOME=/usr/local/bin;;
     arch*)
         PY_HOME=/usr/bin;;
-    l-*)
-        PY_HOME=/home/q/python/default/bin
-        WORKON_HOME=/home/q/python/env
-        ;;
     *)
         PY_HOME=/usr/bin;;
 esac
