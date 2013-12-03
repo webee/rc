@@ -187,6 +187,12 @@ let g:Powline_symbols='fancy'
 " #syntax
 Bundle 'vim-scripts/python.vim--Vasiliev'
 
+" #code gen
+Bundle 'SirVer/ultisnips'
+Bundle 'tpope/vim-commentary'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-repeat'
+
 Bundle 'vim-scripts/indentpython.vim'
 "Bundle 'nvie/vim-flake8'
 "autocmd FileType python map <buffer> <F7> :call Flake8()<CR>
@@ -259,7 +265,6 @@ endif
 
 Bundle 'Valloric/ListToggle'
 Bundle 'scrooloose/syntastic'
-"Bundle 'SirVer/ultisnips'
 "}}}
 
 "{{{# 其它的git repos

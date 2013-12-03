@@ -184,6 +184,12 @@ set noshowmode
 set t_Co=256
 let g:Powline_symbols='fancy'
 
+" #code gen
+Bundle 'SirVer/ultisnips'
+Bundle 'tpope/vim-commentary'
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-repeat'
+
 " #syntax
 Bundle 'vim-scripts/python.vim--Vasiliev'
 
@@ -259,7 +265,6 @@ endif
 
 Bundle 'Valloric/ListToggle'
 Bundle 'scrooloose/syntastic'
-Bundle 'SirVer/ultisnips'
 "}}}
 
 "{{{# 其它的git repos
