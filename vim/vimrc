@@ -69,7 +69,9 @@ set fileencodings=ucs-bom,utf-8,cp936,gb18030,big5,latin1
 "set nobackup
 "显示临时文件
 "set noswapfile
-set backupdir=~/.vimbak
+if isdirectory(expand("~/.vimbak"))
+    set backupdir=~/.vimbak
+endif
 "设置历史记录条数
 set history=1000
 
@@ -122,8 +124,8 @@ set incsearch
 set hls!
 
 " #分隔窗口设置 在当前文件窗口的下面和右边显示新窗口
-set splitbelow
-set splitright
+"set splitbelow
+"set splitright
 
 " #设置色彩配置
 colorscheme default
@@ -134,6 +136,15 @@ hi PmenuSbar ctermbg=248 guibg=Grey
 " #折叠
 set foldmethod=marker
 set foldmarker={{{,}}}
+
+" #粘贴
+nnoremap <F3> :set invpaste paste?<CR>
+set pastetoggle=<F3>
+set showmode
+
+" ##
+au BufWinLeave .vimrc,*.py mkview
+au BufWinEnter .vimrc,*.py silent loadview
 
 "{{{ [自定义映射]
 nnoremap <leader>z :qall!<CR>
@@ -248,6 +259,11 @@ if host =~ "darwin" || host =~ "arch"
     set completeopt-=preview
     let g:ycm_autoclose_preview_window_after_completion = 1
     let g:ycm_seed_identifiers_with_syntax = 1
+
+    " make UltiSnips work with YCM.
+    let g:UltiSnipsExpandTrigger='<c-e>'
+    let g:UltiSnipsJumpForwardTrigger='<c-j>'
+    let g:UltiSnipsJumpBackwardTrigger='<c-k>'
 else
     Bundle 'davidhalter/jedi-vim'
     let g:jedi#goto_assignments_command = "<leader>g"
@@ -265,6 +281,8 @@ endif
 
 Bundle 'Valloric/ListToggle'
 Bundle 'scrooloose/syntastic'
+
+Bundle 'kien/ctrlp.vim'
 "}}}
 
 "{{{# 其它的git repos
