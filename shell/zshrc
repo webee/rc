@@ -50,6 +50,7 @@ DISABLE_AUTO_UPDATE="true"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 plugins=(git osx)
 
+# /etc/profile.d/python.sh
 source /etc/profile
 source $ZSH/oh-my-zsh.sh
 if [ -f $HOME/.zprofile ]; then
@@ -61,7 +62,3 @@ export PATH
 
 # Customize to your needs...
 pip completion --zsh|source /dev/stdin
-
-# local source
-export VIRTUALENVWRAPPER_PYTHON=${PY_HOME}/python
-source ${PY_HOME}/virtualenvwrapper.sh
