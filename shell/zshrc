@@ -62,3 +62,6 @@ export PATH
 
 # Customize to your needs...
 pip completion --zsh|source /dev/stdin
+
+# python
+source ${PY_HOME}/virtualenvwrapper.sh
