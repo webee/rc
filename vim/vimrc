@@ -220,9 +220,6 @@ autocmd FileType python compiler pylint
 Bundle 'jmcantrell/vim-virtualenv'
 let g:virtualenv_auto_activate = 1
 
-Bundle 'vim-scripts/VimClojure'
-let vimclojure#WantNailgun = 1
-
 Bundle 'vim-scripts/FuzzyFinder'
 Bundle 'vim-scripts/taglist.vim'
 let Tlist_Ctags_Cmd=bin_dir."/ctags"
@@ -283,6 +280,41 @@ Bundle 'Valloric/ListToggle'
 Bundle 'scrooloose/syntastic'
 
 Bundle 'kien/ctrlp.vim'
+
+" #lisp
+Bundle 'guns/vim-clojure-static'
+Bundle 'tpope/vim-fireplace'
+Bundle 'wlangstroth/vim-racket'
+Bundle 'kien/rainbow_parentheses.vim'
+"{{{ rainbow_parentheses settings.
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+let g:rbpt_max = 16
+let g:rbpt_loadcmd_toggle = 0
+
+au VimEnter * RainbowParenthesesToggle
+au Syntax * RainbowParenthesesLoadRound
+au Syntax * RainbowParenthesesLoadSquare
+au Syntax * RainbowParenthesesLoadBraces
+"}}}
+
+"Bundle 'vim-scripts/slimv.vim'
 "}}}
 
 "{{{# 其它的git repos
@@ -307,6 +339,6 @@ filetype plugin indent on   " required!
 set omnifunc=syntaxcomplete#Complete
 set completeopt+=longest
 autocmd FileType python setlocal completeopt-=preview
-autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+"autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+"autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
