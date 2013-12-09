@@ -62,6 +62,7 @@ export PATH
 
 # Customize to your needs...
 pip completion --zsh|source /dev/stdin
+export EDITOR="vim"
 
 # python
 source ${PY_HOME}/virtualenvwrapper.sh
