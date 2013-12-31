@@ -44,4 +44,8 @@ if [ "$1" != "" ] && ! [[ "$1" == -* ]]; then
     fi
 fi
 
-python "$@"
+if [ "$VIRTUAL_ENV" != "" ]; then
+    ${VIRTUAL_ENV}/${VIRTUALENVWRAPPER_ENV_BIN_DIR}/python "$@"
+else
+    ${PY_HOME}/python "$@"
+fi
