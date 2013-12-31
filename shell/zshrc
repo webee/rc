@@ -66,3 +66,17 @@ export EDITOR="vim"
 
 # python
 source ${PY_HOME}/virtualenvwrapper.sh
+
+# {ssh}
+eval `/usr/local/bin/ssh-attach`
+for i in ~/.ssh/{id_rsa,id_rsa_cn6};
+do
+    if ssh-add -l|grep -q "$i"; then
+        continue
+    fi
+    ssh-add $i
+done
+
+# update ssh host alias
+curl l-pgstats2.h.cn6.qunar.com:54321/ssh_config_alias 2>/dev/null >~/.ssh/config_alias
+cat ~/.ssh/config_{head,alias,tail} >~/.ssh/config

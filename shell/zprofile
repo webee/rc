@@ -1,1 +1,2 @@
 export QHOME=/home/q/wang.yi
+export PATH=$PATH:$QHOME/local/bin
