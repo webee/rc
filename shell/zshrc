@@ -78,5 +78,6 @@ do
 done
 
 # update ssh host alias
-curl l-pgstats2.h.cn6.qunar.com:54321/ssh_config_alias 2>/dev/null >~/.ssh/config_alias
-cat ~/.ssh/config_{head,alias,tail} >~/.ssh/config
+if curl --connect-timeout 1 l-pgstats2.h.cn6.qunar.com:54321/ssh_config_alias 2>/dev/null >~/.ssh/config_alias; then
+    cat ~/.ssh/config_{head,alias,tail} >~/.ssh/config
+fi
