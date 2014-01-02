@@ -68,14 +68,16 @@ export EDITOR="vim"
 source ${PY_HOME}/virtualenvwrapper.sh
 
 # {ssh}
-eval `/usr/local/bin/ssh-attach`
-for i in ~/.ssh/{id_rsa,id_rsa_cn6};
-do
-    if ssh-add -l|grep -q "$i"; then
-        continue
-    fi
-    ssh-add $i
-done
+if [ -x /usr/local/bin/ssh-attach ]; then
+    eval `/usr/local/bin/ssh-attach`
+    for i in ~/.ssh/{id_rsa,id_rsa_cn6};
+    do
+        if ssh-add -l|grep -q "$i"; then
+            continue
+        fi
+        ssh-add $i
+    done
+fi
 
 # update ssh host alias
 if curl --connect-timeout 1 l-pgstats2.h.cn6.qunar.com:54321/ssh_config_alias 2>/dev/null >~/.ssh/config_alias; then
