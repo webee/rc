@@ -1,0 +1,16 @@
+# {tail}
+Host *.cn6
+    IdentityFile ~/.ssh/id_rsa_cn6
+    ProxyCommand ssh cn6 exec nc %h %p 2>/dev/null
+
+Host li-arch64v_01
+    User webee
+    Hostname 106.186.116.111
+
+Host *
+    User wang.yi
+    ServerAliveInterval 30
+    ControlMaster auto
+    ControlPath ~/.ssh/master-%r@%h:%p
+    ControlPersist yes
+

@@ -7,3 +7,5 @@ l-* shell/zprofile ~/.zprofile
 l-* env/python.corp.sh /etc/profile.d/python.sh env/python_after.sh
 !l-* env/python.sh /etc/profile.d/python.sh env/python_after.sh
 * env/pip.conf ~/.pip/pip.conf
+* ssh/config_head ~/.ssh/config_head
+* ssh/config_tail ~/.ssh/config_tail
