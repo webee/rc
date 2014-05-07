@@ -13,5 +13,6 @@ l-* env/python.corp.sh /etc/profile.d/python.sh env/python_after.sh
 !l-* env/gitconfig ~/.gitconfig
 !l-* var/tmux.conf ~/.tmux.conf
 !l-* scripts/mytmux.sh ~/scripts/mytmux.sh
+!l-* scripts/mytmux ~/scripts/mytmux
 !l-* scripts/sshsocks.sh ~/scripts/sshsocks.sh
 !l-* ssh/ssh-attach /usr/local/bin/ssh-attach
