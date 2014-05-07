@@ -7,6 +7,7 @@ l-* shell/zprofile ~/.zprofile
 Darwin* env/profile /etc/profile env/profile_after.sh
 l-* env/python.corp.sh /etc/profile.d/python.sh env/python_after.sh
 !l-* env/python.sh /etc/profile.d/python.sh env/python_after.sh
+Darwin* env/java.sh /etc/profile.d/java.sh
 * env/pip.conf ~/.pip/pip.conf
 * ssh/config_head ~/.ssh/config_head
 * ssh/config_tail ~/.ssh/config_tail
