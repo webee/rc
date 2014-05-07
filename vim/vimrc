@@ -181,7 +181,7 @@ call vundle#rc()
 "=====================
 "{{{# 管理自己
 " required
-Bundle 'gmarik/vundle'
+Bundle 'gmarik/Vundle.vim'
 "}}}
 
 "{{{# vim-scripts repos
