@@ -1,7 +1,10 @@
 host=$(hostname)
+if [ "${host}" = "localhost" ]; then
+    host=$(uname)
+fi
 WORKON_HOME=~/.virtualenvs
 case $host in
-    darwin*)
+    darwin*|Darwin*)
         PY_HOME=/usr/local/bin;;
     arch*)
         PY_HOME=/usr/bin;;
