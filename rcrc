@@ -4,7 +4,7 @@ l-* vim/vimrc.corp ~/.vimrc
 * X/Xresources ~/.Xresources
 * shell/zshrc ~/.zshrc
 l-* shell/zprofile ~/.zprofile
-darwin* env/profile /etc/profile env/profile_after.sh
+Darwin* env/profile /etc/profile env/profile_after.sh
 l-* env/python.corp.sh /etc/profile.d/python.sh env/python_after.sh
 !l-* env/python.sh /etc/profile.d/python.sh env/python_after.sh
 * env/pip.conf ~/.pip/pip.conf
@@ -15,5 +15,5 @@ l-* env/python.corp.sh /etc/profile.d/python.sh env/python_after.sh
 !l-* scripts/mytmux.sh ~/scripts/mytmux.sh
 !l-* scripts/mytmux ~/scripts/mytmux
 !l-* scripts/sshsocks.sh ~/scripts/sshsocks.sh
-darwin* var/webee.sshsocks.plist /Library/LaunchAgents/webee.sshsocks.plist
+Darwin* var/webee.sshsocks.plist /Library/LaunchAgents/webee.sshsocks.plist
 !l-* ssh/ssh-attach /usr/local/bin/ssh-attach

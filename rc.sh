@@ -5,6 +5,9 @@ cd $(dirname $0)
 root=$(pwd)
 
 this_host=$(hostname)
+if [ "${this_host}" = "localhost" ]; then
+    this_host=$(uname)
+fi
 this_user=$(whoami)
 
 while read host rc dest after;
