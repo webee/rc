@@ -57,7 +57,7 @@ if [ -f $HOME/.zprofile ]; then
     source $HOME/.zprofile
 fi
 
-PATH=$PY_HOME:$HOME/scripts:$PATH
+PATH=/user/local/bin:$PY_HOME:$HOME/scripts:$PATH
 export PATH
 
 # Customize to your needs...

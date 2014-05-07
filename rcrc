@@ -4,6 +4,7 @@ l-* vim/vimrc.corp ~/.vimrc
 * X/Xresources ~/.Xresources
 * shell/zshrc ~/.zshrc
 l-* shell/zprofile ~/.zprofile
+darwin* env/profile /etc/profile env/profile_after.sh
 l-* env/python.corp.sh /etc/profile.d/python.sh env/python_after.sh
 !l-* env/python.sh /etc/profile.d/python.sh env/python_after.sh
 * env/pip.conf ~/.pip/pip.conf
