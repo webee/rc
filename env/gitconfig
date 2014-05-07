@@ -1,0 +1,7 @@
+[user]
+    email = webee.yw@gmail.com
+    name = webee
+[push]
+    default = simple
+[core]
+    autocrlf = input
