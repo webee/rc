@@ -57,14 +57,15 @@ if [ -f $HOME/.zprofile ]; then
     source $HOME/.zprofile
 fi
 
-PATH=/user/local/bin:$PY_HOME:$HOME/scripts:$PATH
-export PATH
+pathmunge "/usr/local/bin"
+pathmunge "$HOME/scripts"
+pathmunge "$PY_HOME"
 
 # Customize to your needs...
 pip completion --zsh|source /dev/stdin
 export EDITOR="vim"
 
-# python
+# # python
 source ${PY_HOME}/virtualenvwrapper.sh
 
 # {ssh}
@@ -82,4 +83,13 @@ fi
 # update ssh host alias
 if curl --connect-timeout 1 l-pgstats2.h.cn6.qunar.com:54321/ssh_config_alias 2>/dev/null >~/.ssh/config_alias; then
     cat ~/.ssh/config_{head,alias,tail} >~/.ssh/config
+fi
+
+# pyenv
+if which pyenv; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    pathmunge "$PYENV_ROOT/bin"
+    eval "$(pyenv init -)"
+
+    export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 fi
