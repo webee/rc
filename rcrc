@@ -5,6 +5,7 @@ l-* vim/vimrc.corp ~/.vimrc
 * shell/zshrc ~/.zshrc
 l-* shell/zprofile ~/.zprofile
 Darwin* env/profile /etc/profile env/profile_after.sh
+li-arch* env/profile.arch /etc/profile env/profile_after.sh
 l-* env/python.corp.sh /etc/profile.d/python.sh env/python_after.sh
 !l-* env/python.sh /etc/profile.d/python.sh env/python_after.sh
 Darwin* env/java.sh /etc/profile.d/java.sh
