@@ -73,6 +73,9 @@ if [ -x /usr/local/bin/ssh-attach ]; then
     eval `/usr/local/bin/ssh-attach`
     for i in ~/.ssh/{id_rsa,id_rsa_cn6};
     do
+        if ! [ -d $i ]; then
+            continue
+        fi
         if ssh-add -l|grep -q "$i"; then
             continue
         fi
@@ -86,7 +89,7 @@ if curl --connect-timeout 1 l-pgstats2.h.cn6.qunar.com:54321/ssh_config_alias 2>
 fi
 
 # pyenv
-if which pyenv; then
+if [ -d $HOME/.pyenv ]; then
     export PYENV_ROOT="$HOME/.pyenv"
     pathmunge "$PYENV_ROOT/bin"
     eval "$(pyenv init -)"
