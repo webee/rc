@@ -19,6 +19,7 @@ alias fgrep="grep -F"
 alias pacman='sudo pacman'
 alias updatedb='sudo /usr/libexec/locate.updatedb'
 
+export TAB='	'
 #servers
 if [ -f ~/.ssh/server_alias.sh ]; then
     source ~/.ssh/server_alias.sh
@@ -78,5 +79,8 @@ do
 done
 
 # update ssh host alias
-curl l-pgstats2.h.cn6.qunar.com:54321/ssh_config_alias 2>/dev/null >~/.ssh/config_alias
+curl l-pgstats2.h.cn6.qunar.com:54321/ssh_config_alias 2>/dev/null >/dev/null
+if [ $? -eq 0 ]; then
+    curl l-pgstats2.h.cn6.qunar.com:54321/ssh_config_alias 2>/dev/null >~/.ssh/config_alias
+fi
 cat ~/.ssh/config_{head,alias,tail} >~/.ssh/config
