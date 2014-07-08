@@ -4,6 +4,18 @@ l-* vim/vimrc.corp ~/.vimrc
 * X/Xresources ~/.Xresources
 * shell/zshrc ~/.zshrc
 l-* shell/zprofile ~/.zprofile
+Darwin* env/profile /etc/profile env/profile_after.sh
+li-arch* env/profile.arch /etc/profile env/profile_after.sh
 l-* env/python.corp.sh /etc/profile.d/python.sh env/python_after.sh
 !l-* env/python.sh /etc/profile.d/python.sh env/python_after.sh
+Darwin* env/java.sh /etc/profile.d/java.sh
 * env/pip.conf ~/.pip/pip.conf
+* ssh/config_head ~/.ssh/config_head
+* ssh/config_tail ~/.ssh/config_tail
+!l-* env/gitconfig ~/.gitconfig
+!l-* var/tmux.conf ~/.tmux.conf
+!l-* scripts/mytmux.sh ~/scripts/mytmux.sh
+!l-* scripts/mytmux ~/scripts/mytmux
+!l-* scripts/sshsocks.sh ~/scripts/sshsocks.sh
+Darwin* var/webee.sshsocks.plist /Library/LaunchAgents/webee.sshsocks.plist
+!l-* ssh/ssh-attach /usr/local/bin/ssh-attach

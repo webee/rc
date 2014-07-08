@@ -170,7 +170,7 @@ nmap <leader>uq :call g:ClangUpdateQuickFix()<cr>
 "{{{[必要配置]
 set nocompatible        " be iMproved
 filetype off            " required
-set rtp+=~/.vim/bundle/vundle
+set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#rc()
 "}}}
 
@@ -178,7 +178,7 @@ call vundle#rc()
 "=====================
 "{{{# 管理自己
 " required
-Bundle 'gmarik/vundle'
+Bundle 'gmarik/Vundle.vim'
 "}}}
 
 "{{{# vim-scripts repos
