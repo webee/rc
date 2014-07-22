@@ -1,0 +1,25 @@
+#!/usr/bin/env perl
+
+use strict;
+my $exist;
+my @dirs = grep {-r $_} glob "/tmp/ssh-*";
+foreach (@dirs) {
+        my @socks = glob("{$_}/agent.*");
+        next unless (@socks);
+        foreach (@socks) {
+                $exist = $_;
+                # check agent
+                unless (system "SSH_AUTH_SOCK=$_ ssh-add -l >/dev/null 2>&1") {
+                        print "export SSH_AUTH_SOCK=$_\n";
+                        exit 0;
+                }
+        }
+}
+
+if ($exist) {
+        system "SSH_AUTH_SOCK=$exist ssh-add";
+        print "export SSH_AUTH_SOCK=$exist\n";
+} else {
+        system "ssh-agent";
+        exec $0;
+}
