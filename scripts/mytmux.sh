@@ -1,4 +1,10 @@
 #!/bin/bash
+if [ "$1" == '.' ];then
+    shift;
+    exec tmux $*
+    exit 0
+fi
+
 name=$1
 n=$2
 if [ "$name" == "" ];then
