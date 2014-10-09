@@ -131,7 +131,7 @@ set hls!
 "set splitright
 
 " #设置色彩配置
-colorscheme default
+colorscheme darkblue
 hi Pmenu ctermbg=255 ctermfg=0 guibg=LightMagenta
 hi PmenuSel ctermbg=7 ctermfg=0 guibg=Grey
 hi PmenuSbar ctermbg=248 guibg=Grey

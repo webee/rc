@@ -3,8 +3,8 @@
 function pathmunge {
     if echo $PATH | /usr/bin/egrep -q "(^|:)$1($|:)";then
         a=${1//\//\\\/}
-        PATH=$(echo $PATH|sed -e "s/\([:^]*\)$a\([$:]*\)/\1\2/g")
-        PATH=$(echo $PATH|sed -e 's/::/:/g'|sed -e 's/^://g'|sed -e 's/:$//g')
+        PATH=$(echo $PATH|/usr/bin/sed -e "s/\([:^]*\)$a\([$:]*\)/\1\2/g")
+        PATH=$(echo $PATH|/usr/bin/sed -e 's/::/:/g'|/usr/bin/sed -e 's/^://g'|/usr/bin/sed -e 's/:$//g')
     fi
     if [ "$2" = "after" ];then
         PATH=$PATH:$1

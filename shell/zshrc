@@ -58,16 +58,12 @@ if [ -f $HOME/.zprofile ]; then
     source $HOME/.zprofile
 fi
 
-pathmunge "/usr/local/bin"
-pathmunge "$HOME/scripts"
-pathmunge "$PY_HOME"
-
 # Customize to your needs...
 pip completion --zsh|source /dev/stdin
 export EDITOR="vim"
 
 # # python
-source ${PY_HOME}/virtualenvwrapper.sh
+# source ${PY_HOME}/virtualenvwrapper.sh
 
 # {ssh}
 if [ -x /usr/local/bin/ssh-attach ]; then
@@ -97,3 +93,8 @@ if [ -d $HOME/.pyenv ]; then
 
     export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
 fi
+
+#path
+pathmunge "$HOME/scripts"
+pathmunge "$PY_HOME"
+pathmunge "/usr/local/bin"
