@@ -23,5 +23,6 @@ export VIRTUALENVWRAPPER_PYTHON=${PY_HOME}/python
 export PYENV_ROOT="/home/q/python/pyenv"
 pathmunge "$PYENV_ROOT/bin"
 eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"
