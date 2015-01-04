@@ -67,7 +67,7 @@ pip completion --zsh|source /dev/stdin
 export EDITOR="vim"
 
 # # python
-source ${PY_HOME}/virtualenvwrapper.sh
+# source ${PY_HOME}/virtualenvwrapper.sh
 
 # {ssh}
 if [ -x /usr/local/bin/ssh-attach ]; then
