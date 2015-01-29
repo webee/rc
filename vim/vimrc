@@ -59,6 +59,9 @@ nmap <F10> :!ctags -ftags -R --c-kinds=+lpx --c++-kinds=+lpx --langmap=c:.c.h --
 "关闭vi的兼容模式 iMproved.
 set nocompatible
 
+if $TMUX == ''
+    set clipboard=unnamed
+endif
 "设置编码方式
 set encoding=utf-8
 "自动判断编码时 依次尝试以下编码
