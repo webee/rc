@@ -13,15 +13,16 @@ function pathmunge {
 }
 
 PY_HOME=/home/q/python/default/bin
-WORKON_HOME=/home/q/python/env
+#WORKON_HOME=/home/q/python/env
 
 export PY_HOME
-export WORKON_HOME
+#export WORKON_HOME
 
 export VIRTUALENVWRAPPER_PYTHON=${PY_HOME}/python
 
 export PYENV_ROOT="/home/q/python/pyenv"
 pathmunge "$PYENV_ROOT/bin"
 eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 
 export PYENV_VIRTUALENVWRAPPER_PREFER_PYVENV="true"

@@ -68,7 +68,7 @@ export EDITOR="vim"
 # {ssh}
 if [ -x /usr/local/bin/ssh-attach ]; then
     eval `/usr/local/bin/ssh-attach`
-    for i in ~/.ssh/{id_rsa,id_rsa_cn6};
+    for i in ~/.ssh/{id_rsa,id_rsa_*};
     do
         if ! [ -d $i ]; then
             continue
@@ -81,9 +81,9 @@ if [ -x /usr/local/bin/ssh-attach ]; then
 fi
 
 # update ssh host alias
-if curl --connect-timeout 1 l-pgstats2.h.cn6.qunar.com:54321/ssh_config_alias 2>/dev/null >~/.ssh/config_alias; then
-    cat ~/.ssh/config_{head,alias,tail} >~/.ssh/config
-fi
+# if curl --connect-timeout 1 l-pgstats2.h.cn6.qunar.com:54321/ssh_config_alias 2>/dev/null >~/.ssh/config_alias; then
+#     cat ~/.ssh/config_{head,alias,tail} >~/.ssh/config
+# fi
 
 # pyenv
 if [ -d $HOME/.pyenv ]; then
