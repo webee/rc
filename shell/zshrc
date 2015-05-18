@@ -18,6 +18,8 @@ alias egrep="grep -E"
 alias fgrep="grep -F"
 alias pacman='sudo pacman'
 alias updatedb='sudo /usr/libexec/locate.updatedb'
+alias e='emacsclient -t'
+alias ec='emacsclient -c'
 
 export TAB='	'
 #servers
@@ -66,22 +68,22 @@ export EDITOR="vim"
 # source ${PY_HOME}/virtualenvwrapper.sh
 
 # {ssh}
-if [ -x /usr/local/bin/ssh-attach ]; then
-    eval `/usr/local/bin/ssh-attach`
-    for i in ~/.ssh/{id_rsa,id_rsa_*};
-    do
-        if ! [ -d $i ]; then
-            continue
-        fi
-        if ssh-add -l|grep -q "$i"; then
-            continue
-        fi
-        ssh-add $i
-    done
-fi
+# if [ -x /usr/local/bin/ssh-attach ]; then
+#     eval `/usr/local/bin/ssh-attach`
+#     for i in ~/.ssh/{id_rsa,id_rsa_cn6};
+#     do
+#         if ! [ -d $i ]; then
+#             continue
+#         fi
+#         if ssh-add -l|grep -q "$i"; then
+#             continue
+#         fi
+#         ssh-add $i
+#     done
+# fi
 
 # update ssh host alias
-# if curl --connect-timeout 1 l-pgstats2.h.cn6.qunar.com:54321/ssh_config_alias 2>/dev/null >~/.ssh/config_alias; then
+# if curl --connect-timeout 1 host:54321/ssh_config_alias 2>/dev/null >~/.ssh/config_alias; then
 #     cat ~/.ssh/config_{head,alias,tail} >~/.ssh/config
 # fi
 
