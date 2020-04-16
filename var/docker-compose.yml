@@ -1,0 +1,125 @@
+version: '3'
+services:
+    debian:
+        image: webee/debian-dev
+        entrypoint: /bin/bash
+        restart: unless-stopped
+        stdin_open: true
+        tty: true
+        links:
+            #- es:elasticsearch
+            - es01:es
+            - es01:elasticsearch
+    #es:
+    #    image: elasticsearch:7.0.0
+    #    environment:
+    #        - discovery.type=single-node
+    #    #command: echo "es disabled"
+    #    restart: unless-stopped
+    #    volumes:
+    #        - ./es_data/es:/usr/share/elasticsearch/data
+    #        - ./es_data/es/logs:/usr/share/elasticsearch/logs
+    #    ports:
+    #        - 19200:9200
+    #        - 19300:9300
+    es01:
+        image: webee/es:7.0.0
+        restart: unless-stopped
+        environment:
+            - node.name=es01
+            - discovery.seed_hosts=es02
+            - cluster.initial_master_nodes=es01,es02
+            - bootstrap.memory_lock=true
+            - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+        ulimits:
+            nproc: 65535
+            memlock:
+                soft: -1
+                hard: -1
+        volumes:
+            - ./es_data/es01/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+            - ./es_data/es01:/usr/share/elasticsearch/data
+            - ./es_data/es01/logs:/usr/share/elasticsearch/logs
+        ports:
+            - 19200:9200
+    es02:
+        image: webee/es:7.0.0
+        restart: unless-stopped
+        environment:
+            - node.name=es02
+            - discovery.seed_hosts=es01
+            - cluster.initial_master_nodes=es01,es02
+            - bootstrap.memory_lock=true
+            - "ES_JAVA_OPTS=-Xms256m -Xmx256m"
+        links:
+            - es01:elasticsearch
+        ulimits:
+            memlock:
+                soft: -1
+                hard: -1
+        volumes:
+            - ./es_data/es02/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+            - ./es_data/es02:/usr/share/elasticsearch/data
+            - ./es_data/es02/logs:/usr/share/elasticsearch/logs
+    kibana:
+        image: kibana:7.0.0
+        restart: unless-stopped
+        links:
+            #- es:elasticsearch
+            - es01:elasticsearch
+        ports:
+            - 15601:5601
+    mongo:
+        image: mongo
+        ports:
+            - 37017:27017
+        environment:
+            - TZ=Asia/Shanghai
+            - MONGO_INITDB_ROOT_USERNAME=root
+            - MONGO_INITDB_ROOT_PASSWORD=root
+        volumes:
+            - ./mongo_data:/data/db
+        restart: unless-stopped
+    mysql:
+        image: mariadb
+        ports:
+            - 13306:3306
+        environment:
+            - TZ=Asia/Shanghai
+            - MYSQL_ROOT_PASSWORD=root
+        command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+        volumes:
+            - ./mysql_data:/var/lib/mysql
+        restart: unless-stopped
+    redis:
+        image: redis
+        command: redis-server --appendonly yes
+        volumes:
+            - ./redis_data:/data
+        ports:
+            - 16379:6379
+        restart: unless-stopped
+    nsqlookupd:
+        image: nsqio/nsq
+        command: /nsqlookupd
+        restart: unless-stopped
+        ports:
+          - 14160:4160
+          - 14161:4161
+    nsqd:
+        image: nsqio/nsq
+        command: /nsqd --lookupd-tcp-address=nsqlookupd:4160
+        restart: unless-stopped
+        depends_on:
+          - nsqlookupd
+        ports:
+          - 14150:4150
+          - 14151:4151
+    nsqadmin:
+        image: nsqio/nsq
+        command: /nsqadmin --lookupd-http-address=nsqlookupd:4161
+        restart: unless-stopped
+        depends_on:
+          - nsqlookupd  
+        ports:
+          - 14171:4171
