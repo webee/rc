@@ -9,7 +9,7 @@ set nocompatible
 let mapleader = ","
 
 let host=hostname()
-if host =~ "darwin"
+if host =~ 'mbp\|darwin'
     let bin_dir="/usr/local/bin"
 elseif host =~ "arch"
     let bin_dir="/usr/bin"
@@ -87,8 +87,6 @@ set number
 set ruler
 "当一行文字很长时取消换行
 set nowrap
-"在状态栏显示正在输入的命令
-set showcmd
 "突出显示当前行列
 "set cursorline
 "set cursorcolumn
@@ -127,7 +125,7 @@ set expandtab
 "设置动态增量搜索
 set incsearch
 "关闭搜索结果高亮显示
-set hls!
+set hlsearch
 
 " #分隔窗口设置 在当前文件窗口的下面和右边显示新窗口
 "set splitbelow
@@ -169,6 +167,8 @@ nmap <leader>cn :cn<cr>
 nmap <leader>cp :cp<cr>
 nmap <leader>cw :cw 10<cr>
 nmap <leader>uq :call g:ClangUpdateQuickFix()<cr>
+" Allow saving of files as sudo when I forgot to start vim using sudo.
+cmap w!! w !sudo tee % >/dev/null
 "}}}
 "}}}
 
@@ -184,17 +184,18 @@ call vundle#rc()
 "=====================
 "{{{# 管理自己
 " required
-Bundle 'gmarik/Vundle.vim'
+Plugin 'gmarik/Vundle.vim'
 "}}}
 
 "{{{# vim-scripts repos
 "===============
-Bundle 'L9'
+Plugin 'L9'
 "}}}
 
 "{{{# GitHub repos
 "===============
-Bundle 'Lokaltog/vim-powerline'
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'Lokaltog/vim-powerline'
 "vim有一个状态栏 加上powline则有两个
 set laststatus=2
 set noshowmode
@@ -202,32 +203,23 @@ set t_Co=256
 let g:Powline_symbols='fancy'
 
 " #code gen
-Bundle 'SirVer/ultisnips'
-Bundle 'tpope/vim-commentary'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-repeat'
+Plugin 'SirVer/ultisnips'
+Plugin 'tpope/vim-commentary'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-repeat'
 
 " #syntax
-Bundle 'vim-scripts/python.vim--Vasiliev'
+Plugin 'vim-scripts/python.vim--Vasiliev'
 
-Bundle 'vim-scripts/indentpython.vim'
-Bundle 'nvie/vim-flake8'
-autocmd FileType python map <buffer> <F7> :call Flake8()<CR>
-"let g:flake8_builtins="_, apply"
-let g:flake8_builtins="_"
-let g:flake8_ignore="E501,W293"
-let g:flake8_max_line_length=80
-let g:flake8_max_complexity=10
-"let g:flake8_cmd="/path/to/flake8"
-autocmd BufWritePost *.py call Flake8()
-Bundle 'vim-scripts/pylint.vim'
+Plugin 'vim-scripts/indentpython.vim'
+Plugin 'vim-scripts/pylint.vim'
 autocmd FileType python compiler pylint
 
-Bundle 'jmcantrell/vim-virtualenv'
+Plugin 'jmcantrell/vim-virtualenv'
 let g:virtualenv_auto_activate = 1
 
-Bundle 'vim-scripts/FuzzyFinder'
-Bundle 'vim-scripts/taglist.vim'
+Plugin 'vim-scripts/FuzzyFinder'
+Plugin 'vim-scripts/taglist.vim'
 let Tlist_Ctags_Cmd=bin_dir."/ctags"
 nmap <C-F11> :TlistUpdate<cr>
 nmap <F12> :TlistToggle<cr>
@@ -238,10 +230,10 @@ let g:bufExplorerMaxHeight=30
 let g:NERDTree_title="[NERDTree]"
 let g:winManagerWindowLayout="NERDTree|TagList"
 
-Bundle 'vim-scripts/vimwiki'
+Plugin 'vim-scripts/vimwiki'
 
 " minibufexpl
-Bundle 'vim-scripts/minibufexpl.vim'
+Plugin 'vim-scripts/minibufexpl.vim'
 nmap <leader>t :TMiniBufExplorer<cr>
 let g:miniBufExplMapWindowNavVim = 1
 let g:miniBufExplMapWindowNavVimArrows = 1
@@ -250,50 +242,22 @@ let g:miniBufExplModSelTarget = 1
 let g:miniBufExplMoreThanone = 0
 let g:miniBufExplMapCTabSwitchWindows = 1
 
-"补全
-if host =~ "darwin" || host =~ "arch"
-    Bundle 'Valloric/YouCompleteMe'
-    nnoremap <leader>jd :YcmCompleter GoToDefinitionElseDeclaration<CR>
-    nnoremap <F5> :YcmForceCompileAndDiagnostics<CR>
-    let g:ycm_global_ycm_extra_conf = '~/.vim/.ycm_extra_conf.py'
-    let g:ycm_confirm_extra_conf = 0
-    let g:syntastic_always_populate_loc_list = 1
-    let g:ycm_add_preview_to_completeopt = 0
-    set completeopt-=preview
-    let g:ycm_autoclose_preview_window_after_completion = 1
-    let g:ycm_seed_identifiers_with_syntax = 1
+Plugin 'mattn/emmet-vim'
+Plugin 'Valloric/ListToggle'
 
-    " make UltiSnips work with YCM.
-    let g:UltiSnipsExpandTrigger='<c-e>'
-    let g:UltiSnipsJumpForwardTrigger='<c-j>'
-    let g:UltiSnipsJumpBackwardTrigger='<c-k>'
-else
-    Bundle 'davidhalter/jedi-vim'
-    let g:jedi#goto_assignments_command = "<leader>g"
-    let g:jedi#goto_definitions_command = "<leader>d"
-    let g:jedi#documentation_command = "K"
-    let g:jedi#usages_command = "<leader>n"
-    let g:jedi#completions_command = "<C-Space>"
-    let g:jedi#rename_command = "<leader>r"
-    let g:jedi#show_call_signatures = "1"
-    "let g:jedi#completions_enabled = 0
-    
-    Bundle 'ervandew/supertab'
-    let g:SuperTabDefaultCompletionType = "context"
-endif
+Plugin 'kien/ctrlp.vim'
 
-Bundle 'Valloric/ListToggle'
-Bundle 'scrooloose/syntastic'
-
-Bundle 'kien/ctrlp.vim'
+" #swift
+Plugin 'toyamarinyon/vim-swift'
 
 " #lisp
-Bundle 'guns/vim-clojure-static'
-Bundle 'tpope/vim-fireplace'
-Bundle 'wlangstroth/vim-racket'
-Bundle 'kien/rainbow_parentheses.vim'
+Plugin 'guns/vim-clojure-static'
+Plugin 'tpope/vim-fireplace'
+Plugin 'wlangstroth/vim-racket'
+Plugin 'kien/rainbow_parentheses.vim'
 "{{{ rainbow_parentheses settings.
 let g:rbpt_colorpairs = [
+    \ ['black',       'SeaGreen3'],
     \ ['brown',       'RoyalBlue3'],
     \ ['Darkblue',    'SeaGreen3'],
     \ ['darkgray',    'DarkOrchid3'],
@@ -303,7 +267,6 @@ let g:rbpt_colorpairs = [
     \ ['darkmagenta', 'DarkOrchid3'],
     \ ['brown',       'firebrick3'],
     \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
     \ ['darkmagenta', 'DarkOrchid3'],
     \ ['Darkblue',    'firebrick3'],
     \ ['darkgreen',   'RoyalBlue3'],
@@ -344,7 +307,29 @@ filetype plugin indent on   " required!
 "autocmd FileType python set omnifunc=pythoncomplete#Complete
 set omnifunc=syntaxcomplete#Complete
 set completeopt+=longest
-autocmd FileType python setlocal completeopt-=preview
+"autocmd FileType python setlocal completeopt-=preview
 "autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 "autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
+"last setting
+"
+
+
+" file types
+" autocmd FileType javascript setlocal shiftwidth=2 tabstop=2 softtabstop=2
+
+
+" final
+"在状态栏显示正在输入的命令
+set showcmd
+
+"gui下不要闪烁光标
+set guicursor+=a:blinkon0
+
+let &t_SI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=1\x7\<Esc>\\"
+let &t_SR = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=2\x7\<Esc>\\"
+let &t_EI = "\<Esc>Ptmux;\<Esc>\<Esc>]50;CursorShape=0\x7\<Esc>\\"
+
+set ttimeout
+set timeoutlen=1000
+set ttimeoutlen=0
